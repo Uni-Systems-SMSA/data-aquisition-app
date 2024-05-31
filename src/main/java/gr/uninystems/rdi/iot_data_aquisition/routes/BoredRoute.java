@@ -2,7 +2,7 @@ package gr.uninystems.rdi.iot_data_aquisition.routes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uninystems.rdi.iot_data_aquisition.model.Bored;
-import gr.uninystems.rdi.iot_data_aquisition.service.BoredService;
+import gr.uninystems.rdi.iot_data_aquisition.service.BoredServiceImpl;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class BoredRoute extends RouteBuilder {
 
     @Autowired
-    private BoredService boredService;
+    private BoredServiceImpl boredService;
 
     @Override
     public void configure() throws Exception {

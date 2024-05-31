@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BoredService {
+public class BoredServiceImpl {
 
     @Autowired
     private BoredRepository repository;
