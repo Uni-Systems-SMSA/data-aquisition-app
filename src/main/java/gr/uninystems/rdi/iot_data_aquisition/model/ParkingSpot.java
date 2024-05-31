@@ -6,8 +6,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import org.springframework.data.annotation.Id;
 
+/**
+ * Represents a Parking Spot in the system.
+ *
+ * This class is mapped to the "Parking_Spots" table in the database.
+ *
+ * @author StavrouA
+ * @version 1.0
+ */
 @Entity
-public class Cicicom {
+public class ParkingSpot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @jakarta.persistence.Id
@@ -41,8 +49,9 @@ public class Cicicom {
     private String Code;
     private String Name;
 
-    public Cicicom() {
+    public ParkingSpot() {
     }
+
 
     @Override
     public String toString() {
