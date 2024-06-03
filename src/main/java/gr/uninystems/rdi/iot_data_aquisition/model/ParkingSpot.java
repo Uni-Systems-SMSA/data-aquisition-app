@@ -21,32 +21,59 @@ public class ParkingSpot {
     @jakarta.persistence.Id
     @Column(name = "`ID`")
     private int Id;
+    @Column(name = "`IS_FREE`")
     private boolean IsFree;
+    @Column(name = "`ZONE_ID`")
     private int ZoneID;
+    @Column(name = "`ZONE_NAME'")
     private String ZoneName;
+    @Column(name = "`CITY_ID`")
     private int CityID;
+    @Column(name = "`CITY_NAME`")
     private String CityName;
+    @Column(name = "`PARKING_SPACE_ID'")
     private int ParkingSpaceID;
+    @Column(name = "`PARKING_SPACE_NAME`")
     private String ParkingSpaceName;
+    @Column(name = "`REGION_ID`")
     private int RegionID;
+    @Column(name = "`REGION_NAME`")
     private String RegionName;
+    @Column(name = "`LAT`")
     private double Lat;
+    @Column(name = "`LNG`")
     private double Lng;
+    @Column(name = "`IS_LOCATED'")
     private boolean IsLocated;
+    @Column(name = "`IS_VIOLATED`")
     private boolean IsViolated;
+    @Column(name = "`VIOLATION_DATE`")
     private String ViolationDate;
+    @Column(name = "`VIOLATION_TIME`")
     private String ViolationTime;
+    @Column(name = "`IN_VIOLATION_TIME`")
     private double InViolationTime;
+    @Column(name = "`INSPECTION_STATUS`")
     private int InspectionStatus;
+    @Column(name = "`INSPECTION_STATUS_NAME`")
     private String InspectionStatusName;
+    @Column(name = "`BATERY_STATUS`")
     private double BatteryStatus;
+    @Column(name = "`STATUS_CHANGE_DATE`")
     private String StatusChangeDate;
+    @Column(name = "`LAST_REPORT`")
     private String LastReport;
+    @Column(name = "`TYPE`")
     private int Type;
+    @Column(name = "`DEVICE_IS_ON`")
     private boolean DeviceIsOn;
+    @Column(name = "`CATEGORY_ID`")
     private int CategoryID;
+    @Column(name = "`INSERVICE_MODE`")
     private boolean InServiceMode;
+    @Column(name = "`CODE`")
     private String Code;
+    @Column(name = "`NAME`")
     private String Name;
 
     public ParkingSpot() {

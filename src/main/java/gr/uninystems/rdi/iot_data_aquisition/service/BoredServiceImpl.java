@@ -5,11 +5,14 @@ import gr.uninystems.rdi.iot_data_aquisition.repository.BoredRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+
 @Service
 public class BoredServiceImpl {
 
     @Autowired
     private BoredRepository repository;
+
 
     public void saveBored(Bored data) {
         repository.save(data);

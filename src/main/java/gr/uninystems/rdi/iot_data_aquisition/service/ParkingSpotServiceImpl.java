@@ -60,18 +60,35 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
         return theParkingSpot;
     }
 
+    @Transactional
     @Override
     public ParkingSpot save(ParkingSpot data) {
         return this.repository.save(data);
     }
 
+    @Transactional
     @Override
     public void deleteBy(Long Id) {
-
+        ParkingSpot theParkingSpot = null;
+        if (repository.existsById(Id)) {
+            theParkingSpot = repository.findById(Id).get();
+            repository.delete(theParkingSpot);
+            System.out.println("Deleted ParkingSpot with ID: " + Id);
+        }
+//        else {
+//            // throw exception
+//        }
     }
 
+    @Transactional
     @Override
     public ParkingSpot update(Long Id, boolean IsFree) {
-        return null;
+        ParkingSpot theParkingSpot = null;
+        if (repository.existsById(Id)) {
+            theParkingSpot = repository.findById(Id).get();
+            theParkingSpot.setFree(IsFree);
+            return repository.save(theParkingSpot);
+        }
+        return theParkingSpot;
     }
 }
