@@ -63,16 +63,16 @@ public class ParkingSpot {
     private String StatusChangeDate;
     @Column(name = "`LAST_REPORT`")
     private String LastReport;
-    @Column(name = "`TYPE`")
-    private int Type;
+    @Column(name = "`TYPESA")
+    private int Types;
     @Column(name = "`DEVICE_IS_ON`")
     private boolean DeviceIsOn;
     @Column(name = "`CATEGORY_ID`")
     private int CategoryID;
     @Column(name = "`INSERVICE_MODE`")
     private boolean InServiceMode;
-    @Column(name = "`CODE`")
-    private String Code;
+    @Column(name = "`CODES`")
+    private String Codes;
     @Column(name = "`NAME`")
     private String Name;
 
@@ -105,11 +105,11 @@ public class ParkingSpot {
                 ", BatteryStatus=" + BatteryStatus +
                 ", StatusChangeDate='" + StatusChangeDate + '\'' +
                 ", LastReport='" + LastReport + '\'' +
-                ", Type=" + Type +
+                ", Types=" + Types +
                 ", DeviceIsOn=" + DeviceIsOn +
                 ", CategoryID=" + CategoryID +
                 ", InServiceMode=" + InServiceMode +
-                ", Code='" + Code + '\'' +
+                ", Code='" + Codes + '\'' +
                 ", Name='" + Name + '\'' +
                 '}';
     }
@@ -290,12 +290,12 @@ public class ParkingSpot {
         LastReport = lastReport;
     }
 
-    public int getType() {
-        return Type;
+    public int getTypes() {
+        return Types;
     }
 
-    public void setType(int type) {
-        Type = type;
+    public void setTypes(int types) {
+        Types = types;
     }
 
     public boolean isDeviceIsOn() {
@@ -322,12 +322,12 @@ public class ParkingSpot {
         InServiceMode = inServiceMode;
     }
 
-    public String getCode() {
-        return Code;
+    public String getCodes() {
+        return Codes;
     }
 
-    public void setCode(String code) {
-        Code = code;
+    public void setCodes(String codes) {
+        Codes = codes;
     }
 
     public String getName() {

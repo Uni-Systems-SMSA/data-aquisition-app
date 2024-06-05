@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class MeteoRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("timer://foo?period=1000")
+        from("timer://foo?period=100000")
                 .setHeader("CamelHttpMethod", constant("GET"))
                 .to("https://stratus.meteo.noa.gr/data/stations/latestValues_unisystems.json")
                 .log("Response: Test +  ${body}");
