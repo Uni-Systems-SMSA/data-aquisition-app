@@ -11,7 +11,7 @@ import java.util.List;
  * retrieving, updating, and deleting users.
  * </p>
  *
- * @author StavrouA
+ *
  * @version 1.0
  * @since 2024-05-31
  */
