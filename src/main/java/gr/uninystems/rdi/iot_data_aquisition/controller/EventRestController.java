@@ -15,7 +15,7 @@ public class EventRestController {
         this.eventService = theEventService;
     }
 
-    @GetMapping({"/event/"})
+    @GetMapping({"/events/"})
     public List<Event> findAll() {
         return this.eventService.findAll();
     }
