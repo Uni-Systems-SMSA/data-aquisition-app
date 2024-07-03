@@ -1,3 +1,6 @@
+
+
+
 package gr.uninystems.rdi.iot_data_aquisition.service;
 
 import gr.uninystems.rdi.iot_data_aquisition.model.Event;
@@ -16,6 +19,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> findAll() {
+        System.out.println(eventRepository.findAll());
         return eventRepository.findAll();
     }
 

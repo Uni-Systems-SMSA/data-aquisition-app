@@ -42,7 +42,7 @@ public class EventProcessor implements Processor {
 
         // Retrieve all events from the service
         List<Event> events = eventService.findAll();
-
+        System.out.println(events);
         // Check if the event list is empty and log accordingly
         if (events.isEmpty()) {
             logger.info("No events found");

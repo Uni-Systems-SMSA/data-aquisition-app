@@ -3,8 +3,10 @@ package gr.uninystems.rdi.iot_data_aquisition.routes;
 import gr.uninystems.rdi.iot_data_aquisition.model.Event;
 import gr.uninystems.rdi.iot_data_aquisition.processors.event.EventProcessor;
 import gr.uninystems.rdi.iot_data_aquisition.service.EventService;
+import gr.uninystems.rdi.iot_data_aquisition.service.EventServiceImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +14,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 @Component
 public class EventRoute extends RouteBuilder {
 
     @Value("${routes.iot_data_acquisition.base-rest-path}")
+
     private String baseRestPath;
 
+//    @Autowired
+//    private EventService eventService;
+
     @Autowired
-    private EventService eventService;
+    private EventServiceImpl eventService;
 
     @Autowired
     private EventProcessor eventProcessor;
@@ -35,14 +43,13 @@ public class EventRoute extends RouteBuilder {
 
 
     private void configureRestEndpoints() {
+
         rest(baseRestPath)
-
                 .get("/events")
-
                 .id("getAllEvents")
                 .description("Retrieves all events")
                 .produces("application/json")
-                .outType(Event[].class)
+                .outType(List.class)
                 .to("direct:getAllEvents");
 
         rest(baseRestPath)
@@ -86,7 +93,9 @@ public class EventRoute extends RouteBuilder {
         from("direct:getAllEvents")
                 .routeId("direct:getAllEvents")
                 .process(eventProcessor)
-                .bean(eventService, "findAll");
+                .bean(eventService, "findAll")
+                .log("Fetched all events: ${body}");;
+
 
         from("direct:getEventById")
                 .routeId("direct:getEventById")
