@@ -1,37 +1,38 @@
 package gr.uninystems.rdi.iot_data_aquisition.routes;
 
+import gr.uninystems.rdi.iot_data_aquisition.aspects.TimerAware;
+import gr.uninystems.rdi.iot_data_aquisition.aspects.TracingAware;
 import gr.uninystems.rdi.iot_data_aquisition.model.Event;
 import gr.uninystems.rdi.iot_data_aquisition.processors.event.EventProcessor;
 import gr.uninystems.rdi.iot_data_aquisition.service.EventService;
-import gr.uninystems.rdi.iot_data_aquisition.service.EventServiceImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Component
 public class EventRoute extends RouteBuilder {
 
-    @Value("${routes.iot_data_acquisition.base-rest-path}")
+    @Value("/events")
 
     private String baseRestPath;
 
-//    @Autowired
-//    private EventService eventService;
+    private final EventService eventService;
 
-    @Autowired
-    private EventServiceImpl eventService;
 
-    @Autowired
-    private EventProcessor eventProcessor;
+    private final EventProcessor eventProcessor;
+
+    public EventRoute(EventService eventService, EventProcessor eventProcessor) {
+        this.eventService = eventService;
+        this.eventProcessor = eventProcessor;
+    }
 
     @Override
     public void configure() throws Exception {
@@ -39,21 +40,26 @@ public class EventRoute extends RouteBuilder {
         configureRestEndpoints();
         configureDirectRoutes();
 
+
     }
 
 
+
+    @TimerAware
+    @TracingAware
     private void configureRestEndpoints() {
 
         rest(baseRestPath)
-                .get("/events")
+                //.get("/events")
+                .get()
                 .id("getAllEvents")
                 .description("Retrieves all events")
                 .produces("application/json")
-                .outType(List.class)
+                .outType(Event[].class)
                 .to("direct:getAllEvents");
 
         rest(baseRestPath)
-                .get("/events/{id}")
+                .get("/{id}")
                 .id("getEventById")
                 .description("Retrieves an event by ID")
                 .produces("application/json")
@@ -94,12 +100,17 @@ public class EventRoute extends RouteBuilder {
                 .routeId("direct:getAllEvents")
                 .process(eventProcessor)
                 .bean(eventService, "findAll")
-                .log("Fetched all events: ${body}");;
+                .marshal().json(JsonLibrary.Jackson, true)
+                .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
+                .log("Fetched all events: ${body}");
 
 
         from("direct:getEventById")
                 .routeId("direct:getEventById")
-                .bean(eventService, "findById(${header.id})");
+                .process(eventProcessor)
+                .bean(eventService, "findById(${header.id})")
+                .marshal().json(JsonLibrary.Jackson, true)
+                .log("Fetched event with id: ${id}");
 
         from("direct:createEvent")
                 .routeId("direct:createEvent")
@@ -120,7 +131,7 @@ public class EventRoute extends RouteBuilder {
         onException(Exception.class)
                 .handled(true)
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                .setBody(simple("Internal server error"));
+                .setBody(simple("Internal server error1"));
 
         onException(IllegalArgumentException.class)
                 .handled(true)

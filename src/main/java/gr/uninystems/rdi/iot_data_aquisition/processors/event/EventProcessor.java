@@ -42,7 +42,7 @@ public class EventProcessor implements Processor {
 
         // Retrieve all events from the service
         List<Event> events = eventService.findAll();
-        System.out.println(events);
+        //System.out.println(events);
         // Check if the event list is empty and log accordingly
         if (events.isEmpty()) {
             logger.info("No events found");
@@ -52,6 +52,7 @@ public class EventProcessor implements Processor {
 
         // Set the response body to the list of events
         exchange.getIn().setBody(events);
+        System.out.println(events);
 
         // Optionally, you can add custom headers or other processing here
         exchange.getIn().setHeader("Total-Events", events.size());
