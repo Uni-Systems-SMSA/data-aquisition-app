@@ -7,6 +7,7 @@ import org.apache.camel.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -55,7 +56,8 @@ public class EventProcessor implements Processor {
         System.out.println(events);
 
         // Optionally, you can add custom headers or other processing here
-        exchange.getIn().setHeader("Total-Events", events.size());
+        //exchange.getIn().setHeader("Total-Events", events.size());
+        exchange.getIn().setHeader(Exchange.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
     }
 
     private void processGetEventById(Exchange exchange) {

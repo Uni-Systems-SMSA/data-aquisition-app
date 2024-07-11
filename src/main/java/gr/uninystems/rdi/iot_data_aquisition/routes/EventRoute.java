@@ -11,6 +11,7 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestParamType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -50,11 +51,10 @@ public class EventRoute extends RouteBuilder {
     private void configureRestEndpoints() {
 
         rest(baseRestPath)
-                //.get("/events")
                 .get()
                 .id("getAllEvents")
                 .description("Retrieves all events")
-                .produces("application/json")
+                .produces(MediaType.APPLICATION_JSON_VALUE)
                 .outType(Event[].class)
                 .to("direct:getAllEvents");
 
@@ -67,6 +67,8 @@ public class EventRoute extends RouteBuilder {
                 .param().name("id").type(RestParamType.path).dataType("long").description("The ID of the event").endParam()
                 .to("direct:getEventById");
 
+
+        //needs work
         rest(baseRestPath)
                 .post("/events")
                 .id("createEvent")
@@ -76,7 +78,7 @@ public class EventRoute extends RouteBuilder {
                 .type(Event.class)
                 .outType(Event.class)
                 .to("direct:createEvent");
-
+        //needs work
         rest(baseRestPath)
                 .put("/events/{id}")
                 .id("updateEvent")
@@ -87,6 +89,7 @@ public class EventRoute extends RouteBuilder {
                 .param().name("isFree").type(RestParamType.query).dataType("boolean").description("The new value for isFree").endParam()
                 .to("direct:updateEvent");
 
+        //needs work
         rest(baseRestPath)
                 .delete("/events/{id}")
                 .id("deleteEvent")
@@ -98,10 +101,12 @@ public class EventRoute extends RouteBuilder {
     private void configureDirectRoutes() {
         from("direct:getAllEvents")
                 .routeId("direct:getAllEvents")
-                .process(eventProcessor)
+                //.process(eventProcessor)
                 .bean(eventService, "findAll")
                 .marshal().json(JsonLibrary.Jackson, true)
-                .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
+                //.unmarshal().json(JsonLibrary.Jackson, true)
+                .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON_VALUE))
+
                 .log("Fetched all events: ${body}");
 
 
